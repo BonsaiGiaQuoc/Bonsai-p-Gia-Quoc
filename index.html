@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Web Đơn Giản Có Logo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .marquee {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    header {
+      background-image: url('./image/bonsai.jpg');
+      background-size: cover;
+      background-position: center;
+      color: rgb(74, 250, 4);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      border: 2px solid rgb(57, 251, 8);
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #007BFF;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .product {
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+      color: #28a745;
+    }
+
+    .product p {
+      margin: 5px 0;
+    }
+
+    .product .price {
+      font-weight: bold;
+      color: #e53935;
+      font-size: 18px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="marquee">
+    <span>🎍 Chào mừng đến với Bonsai Gia Quốc - Ưu đãi đặc biệt tháng này: Mua 2 tặng 1 cho tất cả các mẫu bonsai! 🎍</span>
+  </div>
+
+  <header>
+    <img src="./image/logo-bonsai.jpg" alt="Logo của trang web">
+    <h1>Bonsai Gia Quốc</h1>
+  </header>
+
+  <nav>
+    <a href="#">Trang chủ</a>
+    <a href="#">Giới thiệu</a>
+    <a href="#">Liên hệ</a>
+    <a href="#">Dịch vụ</a>
+  </nav>
+
+  <main>
+    <h2>Trang chủ</h2>
+
+    <div class="product-list">
+
+      <!-- Sản phẩm 1 -->
+      <div class="product">
+        <img src="c:\Users\ADMIN\OneDrive\Hình ảnh\bonsai.tscproj\313426464_452521103628556_116167213563784688_n.jpg" alt="Bonsai Mini">
+        <h3>Bonsai Mini</h3>
+        <p>Cây bonsai nhỏ gọn, thích hợp làm quà tặng.</p>
+        <p class="price">300.000 VND</p>
+      </div>
+
+      <!-- Sản phẩm 2 -->
+      <div class="product">
+        <img src="c:\Users\ADMIN\OneDrive\Hình ảnh\Untitled Project.tscproj\412500656_381711364273321_9222508743126786639_n.jpg" alt="Bonsai Nghệ Thuật">
+        <h3>Bonsai Nghệ Thuật</h3>
+        <p>Tạo dáng nghệ thuật công phu, truyền thống.</p>
+        <p class="price">700.000 VND</p>
+      </div>
+
+      <!-- Sản phẩm 3 -->
+      <div class="product">
+        <img src="c:\Users\ADMIN\Downloads\SEB_3.8_WIN-20241008T014124Z-001\sp3.jpg" alt="Bonsai Cổ Thụ">
+        <h3>Bonsai Cổ Thụ</h3>
+        <p>Phong cách cổ điển, thích hợp trang trí sân vườn.</p>
+        <p class="price">1.500.000 VND</p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Trang web đơn giản. Thiết kế bởi Bạn.
+  </footer>
+
+</body>
+
+</html>
