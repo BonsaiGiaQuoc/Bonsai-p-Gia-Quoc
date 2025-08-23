@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bonsai Gia Quốc</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .marquee {
+            background-color: #28a745; color: white; padding: 10px;
+            font-weight: bold; font-size: 16px; white-space: nowrap;
+            overflow: hidden; position: relative;
+        }
+        .marquee span {
+            display: inline-block; padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        header {
+            background-image: url('./image/bonsai.jpg');
+            background-size: cover; background-position: center;
+            color: #4afa04; padding: 10px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        header img {
+            height: 60px; width: 60px; border-radius: 50%;
+            border: 2px solid #fbe308;
+        }
+        header h1 {
+            font-size: 28px; margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        nav {
+            background-color: #e0e40e;
+            padding: 10px; text-align: center;
+        }
+        nav a {
+            margin: 0 15px; text-decoration: none;
+            color: #007BFF; cursor: pointer;
+        }
+        nav a:hover { text-decoration: underline; }
+        main { padding: 20px; }
+        section {
+            display: none; padding: 20px; background: #f9f9f9;
+        }
+        .product-list {
+            display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;
+        }
+        .product {
+            width: 250px; border: 1px solid #ccc;
+            border-radius: 10px; padding: 15px; text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .product img {
+            width: 100%; height: 200px; object-fit: cover; border-radius: 8px;
+        }
+        .product h3 { margin: 10px 0 5px; color: #28a745; }
+        .product .price {
+            font-weight: bold; color: #e53935; font-size: 18px;
+        }
+        .product button {
+            margin-top: 10px; background-color: #007bff;
+            color: white; border: none; padding: 8px 12px;
+            border-radius: 5px; cursor: pointer;
+        }
+        table { width: 100%; border-collapse: collapse; text-align: center; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 8px; }
+        .delete-btn {
+            background-color: #e53935; color: white;
+            border: none; padding: 5px 10px;
+            border-radius: 5px; cursor: pointer;
+        }
+        #checkoutBtnWrapper {
+            text-align: right; margin-top: 10px; display: none;
+        }
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content {
+            background: white; width: 90%; max-width: 400px;
+            padding: 30px; 
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+        }
+        .close-btn {
+            position: absolute; top: 10px; right: 15px;
+            background: none; border: none; font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
+        .close-btn:hover {
+            color: #000;
+        }
+        #invoice {
+            display:none; background:white; padding:20px; margin: 20px;
+            border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3);
+        }
+        footer {
+            background-color: #333; color: white; padding: 15px; text-align: center;
+        }
+
+       
+        .auth-form {
+            max-width: 350px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: #fff;
+        }
+        .auth-form h2 {
+            text-align: center;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .auth-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        .auth-form input[type="text"],
+        .auth-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .auth-form button {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .auth-form button:hover {
+            background-color: #0056b3;
+        }
+        .auth-form p {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .auth-form p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .auth-form p a:hover {
+            text-decoration: underline;
+        }
+
+        
+        .modal-content input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; 
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 12px 15px; 
+            background-color: #28a745; 
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .modal-content button:hover {
+            background-color: #218838; 
+        }
+
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoice, #invoice * {
+                visibility: visible;
+            }
+            #invoice {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+            }
+        }
+
+       
+        #contentWrapper {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="contentWrapper">
+        <div class="marquee">
+            <span>🎍 Chào mừng đến với Bonsai Gia Quốc - Ưu đãi đặc biệt tháng 7 này: Mua 2 tặng 1 cho tất cả các mẫu bonsai! 🎍</span>
+        </div>
+
+        <header>
+            <img src="./image/logo.jpeg" alt="Logo của trang web">
+            <h1>Bonsai Gia Quốc</h1>
+        </header>
+
+        <nav>
+            <a onclick="showHome()">Trang chủ</a>
+            <a onclick="showAbout()">Giới thiệu</a>
+            <a onclick="showCart()">Giỏ hàng</a>
+            <a onclick="showContact()">Liên hệ</a>
+            <a onclick="showRevenue()">Doanh thu</a>
+            <a id="authLink" onclick="showLogin()" style="display: none;">Đăng nhập</a>
+            <a id="registerLink" onclick="showRegister()" style="display: none;">Đăng ký</a>
+            <a id="logoutLink" onclick="logout()" style="display: none;">Đăng xuất</a>
+        </nav>
+
+        <main id="homeSection">
+            <h2>Trang chủ</h2>
+            <div class="product-list">
+                
+                <div class="product">
+                    <img src="./image/sp1.jpg" alt="Bonsai Mini">
+                    <h3>Bonsai Mini</h3>
+                    <p>Cây bonsai nhỏ gọn, thích hợp làm quà tặng.</p>
+                    <p class="price">300.000 VND</p>
+                    <button onclick="addToCart('Bonsai Mini', 300000)">Thêm vào giỏ hàng</button>
+                </div>
+                <div class="product">
+                    <img src="./image/sp2.jpg" alt="Bonsai Nghệ Thuật">
+                    <h3>Bonsai Nghệ Thuật</h3>
+                    <p>Tạo dáng nghệ thuật công phu, truyền thống.</p>
+                    <p class="price">700.000 VND</p>
+                    <button onclick="addToCart('Bonsai Nghệ Thuật', 700000)">Thêm vào giỏ hàng</button>
+                </div>
+                <div class="product">
+                    <img src="./image/sp3.jpg" alt="Bonsai Phục Hổ">
+                    <h3> Bonsai Phục Hổ</h3>
+                    <p>Bonsai được tạo dáng mạnh mẽ, là sự tinh xảo mà các nghệ nhân đem lại</p>
+                    <p class="price"> 1.500.000 VND</p>
+                    <button onclick="addToCart('Bonsai Phục Hổ', 1500000)"> Thêm vào giỏ hàng</button>
+                </div>
+                <div class="product">
+                    <img src="./image/sp4.jpg" alt="Bonsai Hạc Thần">
+                    <h3> Bonsai Hạc Thần</h3>
+                    <p> Bonsai Hạc Thần đem lại cho quý khách sự sang trọng với màu vàng óng và sự hội tự đoàn viên với hình ảnh những chú chim bay về tổ</p>
+                    <p class="price">3.000.000</p>
+                    <button onclick="addToCart('Bonsai Hạc Thần', 3000000)"> Thêm vào giỏ hàng</button>
+                </div>
+                <div class="product">
+                    <img src="./image/sp5.jpg" alt="Bonsai Kim Quang">
+                    <h3> Bonsai Kim Quang</h3>
+                    <p> Bonsai Kim Quang là sự tinh tế và sang trọng phù hợp làm quà tặng cho gia đình và đồng nghiệp</p>
+                    <p class="price">5.000.000</p>
+                    <button onclick="addToCart('Bonsai Kim Quang', 5000000)"> Thêm vào giỏ hàng</button>
+                </div>
+                  <div class="product">
+                    <img src="./image/sp6.jpg" alt="Bonsai ">
+                    <h3> Bonsai Phượng Đỏ</h3>
+                    <p> Bonsai Phượng Đỏ là sự tinh tế với sắc đỏ đặc trưng như vẻ đẹp của loài hoa phượng giữa mùa hè </p>
+                    <p class="price">2.000.000</p>
+                    <button onclick="addToCart('Bonsai Phượng Đỏ', 2000000)"> Thêm vào giỏ hàng</button>
+                </div>
+                <div class="product">
+                    <img src="./image/sp7.jpg" alt="Bonsai ">
+                    <h3> Bonsai Tân Thời</h3>
+                    <p> Bonsai Tân Thời là sự kết hợp giữa sự cổ điện và hiện đại đem lại cảm giác thoãi mái tinh thần </p>
+                    <p class="price">8.000.000</p>
+                    <button onclick="addToCart('Bonsai Tân Thời', 8000000)"> Thêm vào giỏ hàng</button>
+                </div>
+            </div>
+        </main>
+
+        <section id="aboutSection"><h2>Giới thiệu</h2><p>Chuyên cung cấp bonsai chất lượng cao.</p> <p>Bonsai Gia Quốc là sự lựa chọn tuyệt vời cho quý khách với rất nhiều loại bonsai khác nhau phù hợp cho mọi từng lớp với giá cả hợp lí.</p>
+            <p>Bonsai sai của chúng tôi với nhiều mẫu mã cho quý vị lựa chọn, ngoài ra bonsai của chúng tôi còn là một món quà tuyệt vời dành cho gia đình và đồng nghiệp</p></section>
+        <section id="contactSection"><h2>Liên hệ</h2><p>📞 0356 013 958</p><p>✉ bonsaigiaquoc@gmail.com</p>
+            <p>Địa chỉ: P.Hòa Vang ,TP.Đà Nẵng</p></section>
+
+        <section id="serviceSection">
+            <h2>Giỏ hàng</h2>
+            <table>
+                <thead><tr><th>STT</th><th>Sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th><th>Xóa</th></tr></thead>
+                <tbody id="cartList"></tbody>
+                <tfoot><tr><td colspan="4" style="text-align:right;"><strong>Tổng cộng:</strong></td><td id="totalPrice">0 VND</td><td></td></tr></tfoot>
+            </table>
+            <div id="checkoutBtnWrapper">
+                <button onclick="openModal()" style="padding:10px 20px;">Thanh toán</button>
+            </div>
+        </section>
+
+        <section id="revenueSection">
+            <h2>Doanh thu</h2>
+            <p>Tổng doanh thu: <strong id="revenueAmount">0 VND</strong></p>
+            <button onclick="showRevenueDetails()">Thống kê doanh thu</button>
+            <div id="revenueDetails" style="margin-top:20px;"></div>
+        </section>
+        
+        <div class="modal" id="paymentModal">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h3>Thông tin thanh toán</h3> <label for="customerName">Họ tên:</label>
+                <input type="text" id="customerName" placeholder="Nhập họ tên của bạn">
+                <label for="bankAccount">Số tài khoản ngân hàng:</label>
+                <input type="text" id="bankAccount" placeholder="Nhập số tài khoản ngân hàng">
+                <button onclick="submitPayment()">Xác nhận thanh toán</button>
+            </div>
+        </div>
+
+        <div id="invoice">
+            <h3>🧾 HÓA ĐƠN THANH TOÁN</h3>
+            <p><strong>Khách hàng:</strong> <span id="invName"></span></p>
+            <p><strong>Số tài khoản:</strong> <span id="invAccount"></span></p>
+            <p><strong>Ngày giờ:</strong> <span id="invDate"></span></p>
+            <table>
+                <thead><tr><th>Sản phẩm</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead>
+                <tbody id="invBody"></tbody>
+                <tfoot><tr><td colspan="3" style="text-align:right;"><strong>Tổng:</strong></td><td id="invTotal"></td></tr></tfoot>
+            </table>
+            <button onclick="window.print()" style="margin-top: 15px;">In hóa đơn</button>
+        </div>
+
+        <footer>&copy; 2025 Bonsai Gia Quốc. Thiết kế bởi Bạn.</footer>
+    </div> <section id="loginSection" class="auth-form" style="display: block;">
+        <h2>Đăng nhập</h2>
+        <label for="loginUsername">Tên đăng nhập:</label>
+        <input type="text" id="loginUsername" placeholder="Nhập tên đăng nhập" required>
+        <label for="loginPassword">Mật khẩu:</label>
+        <input type="password" id="loginPassword" placeholder="Nhập mật khẩu" required>
+        <button onclick="login()">Đăng nhập</button>
+        <p>Chưa có tài khoản? <a href="#" onclick="showRegister()">Đăng ký ngay</a></p>
+    </section>
+
+    <section id="registerSection" class="auth-form">
+        <h2>Đăng ký tài khoản</h2>
+        <label for="registerUsername">Tên đăng nhập:</label>
+        <input type="text" id="registerUsername" placeholder="Chọn tên đăng nhập" required>
+        <label for="registerPassword">Mật khẩu:</label>
+        <input type="password" id="registerPassword" placeholder="Chọn mật khẩu" required>
+        <label for="confirmPassword">Xác nhận mật khẩu:</label>
+        <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+        <button onclick="register()">Đăng ký</button>
+        <p>Đã có tài khoản? <a href="#" onclick="showLogin()">Đăng nhập</a></p>
+    </section>
+
+    <script>
+        const cart = [];
+        let revenue = 0;
+        let revenueRecords = [];
+        let users = []; 
+        let currentUser = null;
+
+        
+        function hideAllContent() {
+            document.getElementById('contentWrapper').style.display = 'none';
+            document.querySelectorAll('main, section').forEach(el => el.style.display = 'none');
+        }
+
+        
+        function showAllContent() {
+            document.getElementById('contentWrapper').style.display = 'block';
+        }
+
+        function updateAuthLinks() {
+            const authLink = document.getElementById('authLink');
+            const registerLink = document.getElementById('registerLink');
+            const logoutLink = document.getElementById('logoutLink');
+
+            if (currentUser) {
+                authLink.style.display = 'none';
+                registerLink.style.display = 'none';
+                logoutLink.style.display = 'inline-block';
+            } else {
+                authLink.style.display = 'inline-block'; 
+                registerLink.style.display = 'inline-block';
+                logoutLink.style.display = 'none';
+            }
+        }
+
+        function showHome() { hideAllContent(); document.getElementById('homeSection').style.display = 'block'; showAllContent(); }
+        function showAbout() { hideAllContent(); document.getElementById('aboutSection').style.display = 'block'; showAllContent(); }
+        function showCart() { hideAllContent(); document.getElementById('serviceSection').style.display = 'block'; renderCart(); showAllContent(); }
+        function showContact() { hideAllContent(); document.getElementById('contactSection').style.display = 'block'; showAllContent(); }
+        function showRevenue() {
+            hideAllContent();
+            document.getElementById('revenueSection').style.display = 'block';
+            document.getElementById('revenueAmount').textContent = `${revenue.toLocaleString()} VND`;
+            document.getElementById('revenueDetails').innerHTML = '';
+            showAllContent();
+        }
+
+        function showLogin() {
+            hideAllContent(); 
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('registerSection').style.display = 'none'; 
+        }
+
+        function showRegister() {
+            hideAllContent(); 
+            document.getElementById('registerSection').style.display = 'block';
+            document.getElementById('loginSection').style.display = 'none'; 
+        }
+
+        function register() {
+            const username = document.getElementById('registerUsername').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!username || !password || !confirmPassword) {
+                return alert("Vui lòng nhập đầy đủ thông tin đăng ký!");
+            }
+            if (password !== confirmPassword) {
+                return alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+            }
+            if (users.some(user => user.username === username)) {
+                return alert("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
+            }
+
+            users.push({ username: username, password: password });
+            alert("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
+            document.getElementById('registerUsername').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            showLogin(); 
+            console.log("Registered users:", users); 
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                return alert("Vui lòng nhập tên đăng nhập và mật khẩu!");
+            }
+
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                currentUser = user;
+                alert(`Chào mừng, ${currentUser.username}! Bạn đã đăng nhập thành công.`);
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+                updateAuthLinks();
+                showAllContent(); 
+                showHome(); 
+            } else {
+                alert("Tên đăng nhập hoặc mật khẩu không đúng.");
+            }
+        }
+
+        function logout() {
+            if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+                currentUser = null;
+                alert("Bạn đã đăng xuất.");
+                updateAuthLinks();
+                hideAllContent(); 
+                showLogin(); 
+            }
+        }
+
+        function addToCart(name, price) {
+            if (!currentUser) {
+                alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
+                showLogin();
+                return;
+            }
+            const existing = cart.find(item => item.name === name);
+            if (existing) existing.quantity++;
+            else cart.push({ name, price, quantity: 1 });
+            alert(`Đã thêm "${name}" vào giỏ hàng!`);
+        }
+
+        function removeFromCart(index) {
+            if (confirm("Bạn muốn xóa sản phẩm này?")) {
+                cart.splice(index, 1);
+                renderCart();
+            }
+        }
+
+        function renderCart() {
+            const cartList = document.getElementById('cartList');
+            const totalPrice = document.getElementById('totalPrice');
+            const checkoutBtn = document.getElementById('checkoutBtnWrapper');
+            cartList.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<tr><td colspan="6">Không có sản phẩm trong giỏ.</td></tr>';
+                totalPrice.textContent = '0 VND';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+
+            cart.forEach((item, i) => {
+                const sum = item.price * item.quantity;
+                total += sum;
+                cartList.innerHTML += `
+                    <tr>
+                        <td>${i + 1}</td><td>${item.name}</td><td>${item.price.toLocaleString()} VND</td>
+                        <td>${item.quantity}</td><td>${sum.toLocaleString()} VND</td>
+                        <td><button class="delete-btn" onclick="removeFromCart(${i})">Xóa</button></td>
+                    </tr>`;
+            });
+
+            totalPrice.textContent = `${total.toLocaleString()} VND`;
+            checkoutBtn.style.display = 'block';
+        }
+
+        function openModal() {
+            if (!currentUser) {
+                alert("Vui lòng đăng nhập để tiến hành thanh toán.");
+                showLogin();
+                return;
+            }
+            document.getElementById('paymentModal').style.display = 'flex'; 
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function submitPayment() {
+            const name = document.getElementById('customerName').value.trim();
+            const account = document.getElementById('bankAccount').value.trim();
+            if (!name || !account) return alert("Vui lòng nhập đầy đủ thông tin!");
+
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const date = new Date().toLocaleString();
+            revenue += total;
+            revenueRecords.push({ name, account, total, username: currentUser.username }); 
+
+            
+            document.getElementById('invName').textContent = name;
+            document.getElementById('invAccount').textContent = account;
+            document.getElementById('invDate').textContent = date;
+            document.getElementById('invBody').innerHTML = cart.map(item =>
+                `<tr><td>${item.name}</td><td>${item.quantity}</td><td>${item.price.toLocaleString()} VND</td><td>${(item.price * item.quantity).toLocaleString()} VND</td></td></tr>`
+            ).join('');
+            document.getElementById('invTotal').textContent = `${total.toLocaleString()} VND`;
+            document.getElementById('invoice').style.display = 'block';
+
+            alert("🎉 Thanh toán thành công!");
+            cart.length = 0;
+            renderCart();
+            closeModal();
+            document.getElementById('customerName').value = '';
+            document.getElementById('bankAccount').value = '';
+        }
+
+        function showRevenueDetails() {
+            const container = document.getElementById('revenueDetails');
+           
+            const displayRecords = currentUser ? revenueRecords.filter(r => r.username === currentUser.username) : revenueRecords;
+
+            if (displayRecords.length === 0) {
+                container.innerHTML = '<p>Chưa có đơn hàng nào được thanh toán.</p>';
+                return;
+            }
+
+            let html = `<table><thead>
+                <tr><th>STT</th><th>Họ tên khách</th><th>Số tài khoản</th><th>Số tiền</th></tr>
+            </thead><tbody>`;
+            displayRecords.forEach((r, i) => {
+                html += `<tr><td>${i + 1}</td><td>${r.name}</td><td>${r.account}</td><td>${r.total.toLocaleString()} VND</td></tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+      
+        hideAllContent();
+        showLogin();
+        updateAuthLinks(); 
+    </script>
+</body>
+</html>
